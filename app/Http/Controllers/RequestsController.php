@@ -43,8 +43,8 @@ class RequestsController extends Controller {
 			$user = User::where('id',$requests[$key]['userID'])->get();
 			$requests[$key]['user'] = $user[0]['name'];
 
-			$organization = Organization::where('id',$requests[$key]['organizationID'])->get();
-			$requests[$key]['organization'] = $organization[0]['name'];
+			// $organization = Organization::where('id',$requests[$key]['organizationID'])->get();
+			// $requests[$key]['organization'] = $organization[0]['name'];
 
 		}
 		// print_r(json_encode($requestscate[0]));
@@ -54,16 +54,12 @@ class RequestsController extends Controller {
 	public function manage($id = '')
 	{	
 
-		$organization = Organization::where('parentID',0)->get();
-		
 		if(!empty($id)){
 			$requests = Requests::where('id',$id)->get();
-			$requests_choice = RequestsChoice::where('requestID',$id)->get();
-			$requests['requests_choice'] = $requests_choice;
-
-			return view('requests/edit', ['requests' => $requests,'organization' => $organization]);
+			
+			return view('requests/edit', ['requests' => $requests]);
 		}else{
-			return view('requests/add',['organization' => $organization]);
+			return view('requests/add');
 		}
 		
 	}
@@ -75,23 +71,28 @@ class RequestsController extends Controller {
 
 	public function save(){
 		$data = Request::all();
-		print_r($data);
+		
 		if(!empty($data['ID'])){
 			$requests = Requests::find($data['ID']);
 		}else{
 			$requests = new Requests;
 		}
 
-		$requests->name = $data['name'];
-		$requests->organizationID = $data['organizationID'];
-		$requests->expireday = $data['expireday'];
+		$requests->Firstname = $data['Firstname'];
+		$requests->Lastname = $data['Lastname'];
+		$requests->Nickname = $data['Nickname'];
+		$requests->Position = $data['Position'];
+		$requests->Department = $data['Department'];
+		$requests->Location = $data['Location'];
+		$requests->yearservice = $data['yearservice'];
 		$requests->userID = \Auth::user()->id;
 
 
-		// print_r($request);
+		
 		//cover,recommend
 		if(!empty($data['ID'])){
 			$requests::where('ID', $data['ID'])->update($requests['attributes']);
+			RequestsChoice::where('requestID', $data['ID'])->delete();
 			$requestsid = $data['ID'];
 		}else{
 			$requests->save();
@@ -103,7 +104,6 @@ class RequestsController extends Controller {
 				$requests_choice = new RequestsChoice;
 				$requests_choice->requestID = $requestsid;
 				$requests_choice->name = $value;
-				$requests_choice->required = $data['choice_required'][$key];
 				$requests_choice->save();
 			}
 		}
@@ -113,7 +113,7 @@ class RequestsController extends Controller {
 
 	public function delete($id){
 		Requests::where('ID', $id)->delete();
-		RequestsCategory::where('requestsID', $id)->delete();
+		RequestsChoice::where('requestID', $id)->delete();
 
 		return redirect('requests')->with('message', 'ลบสถานที่เรียบร้อย');
 	}

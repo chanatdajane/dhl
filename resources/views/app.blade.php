@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lampang1stop - @yield('title')</title>
+	<title>DHL - @yield('title')</title>
 
 	<link href="{{ asset('/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -108,7 +108,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><span>BackEnd</span> Lampang1stop</a>
+				<a class="navbar-brand" href="#"><span>DHL</span></a>
 				<ul class="user-menu">
 					@if (Auth::guest())
 						<!-- <li><a href="{{ url('/auth/login') }}">Login</a></li>
@@ -126,30 +126,7 @@
 							
 		</div><!-- /.container-fluid -->
 	</nav>
-	@if (Auth::guest())
-	@else
-	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form>
-		<?php
-			$link = $_SERVER["REQUEST_URI"];
-		    $link_array = explode('/',$link);
-		    $page = end($link_array);
-		    // print_r($menu);
-		?>
-		<ul class="nav menu">
-			<?php foreach($menu as $key => $value){ ?>
-				<li class="<?php if($page==$value['route']) echo 'active'; ?>"><a href="<?php echo "/".$value['route'] ?>"><svg class="glyph stroked calendar"></svg><?php echo $value['name'] ?></a></li>
-			<?php } ?>
-			<li role="presentation" class="divider"></li>
-			<li><a href="{{ url('/auth/logout') }}"><svg class="glyph stroked male-user"></svg> Logout</a></li>
-		</ul>
-
-	</div>
-	@endif
+	
 
 	@if (Auth::guest())
 		<div class="row">
@@ -168,7 +145,7 @@
 				<div class="col-lg-12">
 					<h1 class="page-header">@yield('topic')</h1>
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-10">
 					<div class="panel-body">
 						@yield('content')
 					</div>
