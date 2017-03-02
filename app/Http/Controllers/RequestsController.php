@@ -42,7 +42,7 @@ class RequestsController extends Controller {
 		foreach($requests as $key => $value){
 			$user = User::where('id',$requests[$key]['userID'])->get();
 			$requests[$key]['user'] = $user[0]['name'];
-
+			
 			// $organization = Organization::where('id',$requests[$key]['organizationID'])->get();
 			// $requests[$key]['organization'] = $organization[0]['name'];
 
@@ -54,9 +54,13 @@ class RequestsController extends Controller {
 	public function manage($id = '')
 	{	
 
+		// $organization = Organization::where('parentID',0)->get();
+		
 		if(!empty($id)){
 			$requests = Requests::where('id',$id)->get();
-			
+			$requests_choice = RequestsChoice::where('requestID',$id)->get();
+			$requests['requests_choice'] = $requests_choice;
+
 			return view('requests/edit', ['requests' => $requests]);
 		}else{
 			return view('requests/add');
