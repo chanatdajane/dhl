@@ -82,6 +82,7 @@ class RequestsController extends Controller {
 			$requests = new Requests;
 		}
 
+		$requests->staffID = $data['staffID'];
 		$requests->Firstname = $data['Firstname'];
 		$requests->Lastname = $data['Lastname'];
 		$requests->Nickname = $data['Nickname'];
@@ -90,7 +91,7 @@ class RequestsController extends Controller {
 		$requests->Location = $data['Location'];
 		$requests->yearservice = $data['yearservice'];
 		$requests->userID = \Auth::user()->id;
-
+		$requests->Photo = 'thumbnail.png';
 
 		
 		//cover,recommend
@@ -102,6 +103,9 @@ class RequestsController extends Controller {
 			$requests->save();
 			$requestsid = $requests->id;
 		}
+
+		if(!empty($data['Photo']))
+			$data['Photo']->move('uploads/requests/'.$requestsid.'/','thumbnail.png');
 
 		if(!empty($data['choice_name'])){
 			foreach($data['choice_name'] as $key=>$value){
@@ -118,7 +122,7 @@ class RequestsController extends Controller {
 	public function delete($id){
 		Requests::where('ID', $id)->delete();
 		RequestsChoice::where('requestID', $id)->delete();
-
+		File::deleteDirectory('uploads/requests/'.$id);
 		return redirect('requests')->with('message', 'ลบสถานที่เรียบร้อย');
 	}
 

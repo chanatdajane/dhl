@@ -5,6 +5,16 @@
 @section('content')
 {!! Form::open(array('url' => 'requests/save','files'=>true)) !!}
 		<?php echo Form::text('ID',$requests[0]['ID'], array('style' => 'display:none')); ?>
+		<div class="form-group col-xs-6">
+			<label class="control-label">Photo</label>
+			<input id="Photo" name="Photo" type="file" class="file" data-show-upload="false" data-show-caption="true">
+		</div><div style="clear:both"><br>
+		<div class="form-group">
+			<div class="col-xs-5">
+			  	<label class="topic-head" for="staffID">Staff ID</label>
+			  	<input class="form-control" type="text" placeholder="Staff ID" id="staffID" name="staffID" required value="<?php echo $requests[0]['staffID'] ?>">
+			</div>
+		</div><div style="clear:both"><br>
 		<div class="form-group">
 			<div class="col-xs-5">
 			  	<label class="topic-head" for="name">Firstname</label>
@@ -79,6 +89,26 @@
 {!! Form::close() !!}
 
 <script type="text/javascript">
+	var requestsid = "<?php echo $requests[0]['ID'] ?>";
+	var requestsimg = "<?php echo $requests[0]['Photo'] ?>";
+	var pathimg = "<?php echo URL::to('/'); ?>/uploads/requests/"+requestsid+"/thumbnail.png";
+	
+	console.log(pathimg);
+    $("#Photo").fileinput({
+        initialPreview: [
+            pathimg
+        ],
+        initialPreviewAsData: true,
+        initialPreviewConfig: [
+            {caption: requestsimg, size: 930321, width: "120px", key: 1}
+        ],
+        // deleteUrl: "{{ url('/place/deleteimg') }}",
+        autoReplace: true,
+        overwriteInitial: true,
+        maxFileSize: 100,
+        initialCaption: requestsimg,
+    });
+
 	var i = <?php echo count($requests['requests_choice']); ?>;
     $('.addmorerequest_choice').click(function(){
     	$('.request_choice').append('<div class="request_choice_part"><label class="col-xs-1 col-form-label" for="request_choice"><span class="glyphicon glyphicon-minus removerequest_choice" aria-hidden="true" style="padding-right: 10px;"></span></label><div class="col-xs-1" style="width: 1%;margin-top: 5px;"><label>'+(i+1)+')</label></div><div class="col-xs-7"><input class="form-control" type="text" name="choice_name['+i+']"></div></div><br><br>');

@@ -143,7 +143,8 @@ return [
 		'App\Providers\BusServiceProvider',
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
-		'App\Providers\RouteServiceProvider'
+		'App\Providers\RouteServiceProvider',
+		'Milon\Barcode\BarcodeServiceProvider'
 	],
 
 	/*
@@ -192,7 +193,9 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Html'      => 'Illuminate\Html\HtmlFacade',
-  		'Form'      => 'Illuminate\Html\FormFacade'
+  		'Form'      => 'Illuminate\Html\FormFacade',
+  		'DNS1D' => 'Milon\Barcode\Facades\DNS1DFacade',
+    	'DNS2D' => 'Milon\Barcode\Facades\DNS2DFacade',
 	],
 
 ];

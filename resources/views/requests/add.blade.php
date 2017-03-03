@@ -4,6 +4,16 @@
 
 @section('content')
 {!! Form::open(array('url' => 'requests/save','files'=>true)) !!}
+		<div class="form-group col-xs-6">
+			<label class="control-label">Photo</label>
+			<input id="Photo" name="Photo" type="file" class="file" data-show-upload="false" data-show-caption="true">
+		</div><div style="clear:both"><br>
+		<div class="form-group">
+			<div class="col-xs-5">
+			  	<label class="topic-head" for="staffID">Staff ID</label>
+			  	<input class="form-control" type="text" placeholder="Staff ID" id="staffID" name="staffID" required>
+			</div>
+		</div><div style="clear:both"><br>
 		<div class="form-group">
 			<div class="col-xs-5">
 			  	<label class="topic-head" for="name">Firstname</label>
